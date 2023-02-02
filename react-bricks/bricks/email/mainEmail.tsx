@@ -44,6 +44,9 @@ const MainEmail: types.Brick<HeaderEmailProps> = () => {
         </Section>
       </Column>
     </Section>
+    
+
+                    
   );
 };
 
