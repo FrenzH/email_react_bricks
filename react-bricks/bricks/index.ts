@@ -1,6 +1,7 @@
-import { types } from 'react-bricks/frontend'
-import HeroUnit from './HeroUnit'
+import { types } from "react-bricks/frontend";
+import HeaderEmail from "./email/headerEmail";
+import MainEmail from "./email/mainEmail";
+import FooterEmail from "./email/footerEmail";
+const bricks: types.Brick<any>[] = [HeaderEmail, MainEmail, FooterEmail];
 
-const bricks: types.Brick[] = [HeroUnit]
-
-export default bricks
+export default bricks;
