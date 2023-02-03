@@ -48,10 +48,10 @@ const HeaderEmail: types.Brick<HeaderEmailProps> = ({
     
     
     <Section>
-      <Column>
+      
       <RichText
                       renderBlock={(props) => (
-                        <p className="text-center text-purple-500">
+                        <p className="">
                           {props.children}
                         </p>
                       )}
@@ -64,8 +64,8 @@ const HeaderEmail: types.Brick<HeaderEmailProps> = ({
                         types.RichTextFeatures.Code,
                         types.RichTextFeatures.Link,
                       ]}
-                    /></Column>
-      <Column>ciao</Column>
+                    />
+     
     </Section>
    </Container>
     

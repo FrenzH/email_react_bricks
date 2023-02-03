@@ -15,11 +15,15 @@ interface HeaderEmailProps {}
 
 const MainEmail: types.Brick<HeaderEmailProps> = () => {
   return (
-    <Section>
-      <Column>
-        <Section>
+   
           <Container>
-            <Text
+            
+            <Section>
+
+              <Column>
+
+
+              <Text
               placeholder="Type a title..."
               propName="title"
               renderPlaceholder={(props) => (
@@ -27,9 +31,31 @@ const MainEmail: types.Brick<HeaderEmailProps> = () => {
               )}
               renderBlock={(props) => <th>{props.children}</th>}
             />
+              
+              
+              
+              </Column>
+
+
+
+
+
+            </Section>
+
             <Hr></Hr>
+
+
+                <Section>
+
+
+
+                 
+
+
+
+                    
             <RichText
-              renderBlock={(props) => <p className="">{props.children}</p>}
+              renderBlock={(props) =><ol><li className="">{props.children}</li></ol> }
               placeholder="Type a text..."
               propName="text"
               allowedFeatures={[
@@ -40,10 +66,24 @@ const MainEmail: types.Brick<HeaderEmailProps> = () => {
                 types.RichTextFeatures.Link,
               ]}
             />
+                  
+                  
+                  
+                  
+
+
+
+                </Section>
+
+
+
+
+
+
+           
+          
           </Container>
-        </Section>
-      </Column>
-    </Section>
+       
     
 
                     
