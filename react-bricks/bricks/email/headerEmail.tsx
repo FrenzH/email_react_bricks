@@ -8,8 +8,13 @@ import { Hr } from "./utilities/hr";
 //=============================
 
 interface HeaderEmailProps {
+  title_lineHeigth: number;
+  text_lineHeigth: number;
+  sizeTitle: string;
+  sizeText: string;
+  text_size: number;
   title_size: number;
-  title_color: { color: string; className: string };
+  text_color: { color: string; className: string };
 }
 
 //=============================
@@ -17,60 +22,51 @@ interface HeaderEmailProps {
 //=============================
 
 const HeaderEmail: types.Brick<HeaderEmailProps> = ({
-  title_size = 30,
-  title_color = { color: "black", className: "black-f" },
+  text_lineHeigth = 0,
+  title_lineHeigth = 1,
+  text_size = 10,
+  title_size = 20,
+  sizeTitle = `${title_size}px`,
+  sizeText = `${text_size}px`,
 }) => {
   return (
-    
-   <Container>
-    <Section>
-      <Column>
-      <Text
-                        placeholder="Type a title..."
-                        propName="title"
-                        renderPlaceholder={(props) => <h1>{props.children}</h1>}
-                        renderBlock={(props) => (
-                          <h1
-                            className={`${title_color.className} text-center  size_title_${title_size} `}
-                          >
-                            {props.children}
-                          </h1>
-                        )}
-                      /></Column>
-      <Column>
-      <Image
-                propName="icon"
-                alt="Icon"
-                imageClassName="w-20 mb-5 mx-auto"
-              />
-      </Column>
-    </Section>
-    
-    
-    <Section>
-      
-      <RichText
-                      renderBlock={(props) => (
-                        <p className="">
-                          {props.children}
-                        </p>
-                      )}
-                      placeholder="Type a text..."
-                      propName="text"
-                      allowedFeatures={[
-                        types.RichTextFeatures.Bold,
-                        types.RichTextFeatures.Italic,
-                        types.RichTextFeatures.Highlight,
-                        types.RichTextFeatures.Code,
-                        types.RichTextFeatures.Link,
-                      ]}
-                    />
-     
-    </Section>
-   </Container>
-    
-  
-    
+    <Container>
+      <Section>
+        <Column>
+          <RichText
+            renderBlock={({ children }) => (
+              <p style={{ lineHeight: text_lineHeigth, fontSize: sizeText }}>
+                {children}
+              </p>
+            )}
+            placeholder="Type a text..."
+            propName="text"
+            allowedFeatures={[
+              types.RichTextFeatures.Bold,
+              types.RichTextFeatures.Italic,
+              types.RichTextFeatures.Highlight,
+              types.RichTextFeatures.Code,
+              types.RichTextFeatures.Link,
+              types.RichTextFeatures.Heading1,
+              types.RichTextFeatures.UnorderedList,
+              types.RichTextFeatures.OrderedList,
+              types.RichTextFeatures.Link,
+              types.RichTextFeatures.Heading2,
+              types.RichTextFeatures.Heading3,
+            ]}
+            renderH1={({ children }) => (
+              <h1 style={{ lineHeight: title_lineHeigth, fontSize: sizeTitle }}>
+                {children}
+              </h1>
+            )}
+            // renderUL={({children}) => <ul>{children}</ul>}
+          />
+        </Column>
+        <Column>
+          <Image propName="icon" alt="Icon" />
+        </Column>
+      </Section>
+    </Container>
   );
 };
 
@@ -84,49 +80,14 @@ HeaderEmail.schema = {
   getDefaultProps: () => ({
     title: "Email title",
     text: "Lorem ipsum dolor sit amet.",
-    title_size: 30,
+    text_lineHeigth: 0,
+    title_lineHeigth: 1,
+    title_size: 20,
+    text_size: 20,
+
     title_color: { color: "black", className: "black-f" },
   }),
   sideEditProps: [
-    {
-      groupName: "title",
-      props: [
-        {
-          name: "title_size",
-          label: "title size",
-          type: types.SideEditPropType.Range,
-          rangeOptions: {
-            min: 30,
-            max: 60,
-            step: 2,
-          },
-        },
-        {
-          name: "title_color",
-          label: "title color",
-          type: types.SideEditPropType.Select,
-          selectOptions: {
-            display: types.OptionsDisplay.Color,
-            options: [
-              {
-                label: "red",
-                value: {
-                  color: "red",
-                  className: "red-f",
-                },
-              },
-              {
-                label: "green",
-                value: {
-                  color: "green",
-                  className: "green-f",
-                },
-              },
-            ],
-          },
-        },
-      ],
-    },
     {
       groupName: "text",
       props: [
@@ -141,17 +102,57 @@ HeaderEmail.schema = {
                 label: "red",
                 value: {
                   color: "red",
-                  className: "red-f",
+                  className: "color : red",
                 },
               },
               {
                 label: "green",
                 value: {
                   color: "green",
-                  className: "green-f",
+                  className: "color : green",
                 },
               },
             ],
+          },
+        },
+        {
+          name: "text_lineHeigth",
+          label: "text line heigth",
+          type: types.SideEditPropType.Range,
+          rangeOptions: {
+            min: 0,
+            max: 10,
+            step: 1,
+          },
+        },
+        {
+          name: "title_lineHeigth",
+          label: "title line heigth",
+          type: types.SideEditPropType.Range,
+          rangeOptions: {
+            min: 1,
+            max: 10,
+            step: 1,
+          },
+        },
+        {
+          name: "title_size",
+          label: "title size",
+          type: types.SideEditPropType.Range,
+          rangeOptions: {
+            min: 10,
+            max: 70,
+            step: 1,
+          },
+        },
+        {
+          name: "text_size",
+          label: "text size",
+          type: types.SideEditPropType.Range,
+          rangeOptions: {
+            min: 10,
+            max: 40,
+            step: 1,
           },
         },
       ],
