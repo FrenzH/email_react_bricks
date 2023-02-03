@@ -6,15 +6,25 @@ import { Hr } from "./utilities/hr";
 //=============================
 // Local Types
 //=============================
+type alignText =
+  | "start"
+  | "end"
+  | "left"
+  | "right"
+  | "center"
+  | "justify"
+  | "match-parent";
 
 interface HeaderEmailProps {
-  title_lineHeigth: number;
-  text_lineHeigth: number;
+  titleLineHeigth: number;
+  textLineHeigth: number;
   sizeTitle: string;
   sizeText: string;
-  text_size: number;
-  title_size: number;
-  text_color: { color: string; className: string };
+  textSize: number;
+  titleSize: number;
+  textColor: { color: string; className: string };
+  textFlow: alignText;
+  titleFlow: alignText;
 }
 
 //=============================
@@ -22,19 +32,27 @@ interface HeaderEmailProps {
 //=============================
 
 const MainEmail: types.Brick<HeaderEmailProps> = ({
-  text_lineHeigth = 0,
-  title_lineHeigth = 1,
-  text_size = 10,
-  title_size = 20,
-  sizeTitle = `${title_size}px`,
-  sizeText = `${text_size}px`,
+  textLineHeigth = 0,
+  titleLineHeigth = 1,
+  textSize = 10,
+  titleSize = 20,
+  sizeTitle = `${titleSize}px`,
+  sizeText = `${textSize}px`,
+  textFlow,
+  titleFlow,
 }) => {
   return (
     <Container>
       <Section>
         <RichText
           renderBlock={({ children }) => (
-            <p style={{ lineHeight: text_lineHeigth, fontSize: sizeText }}>
+            <p
+              style={{
+                lineHeight: textLineHeigth,
+                fontSize: sizeText,
+                textAlign: textFlow,
+              }}
+            >
               {children}
             </p>
           )}
@@ -53,7 +71,13 @@ const MainEmail: types.Brick<HeaderEmailProps> = ({
             types.RichTextFeatures.Heading3,
           ]}
           renderH1={({ children }) => (
-            <h1 style={{ lineHeight: title_lineHeigth, fontSize: sizeTitle }}>
+            <h1
+              style={{
+                lineHeight: titleLineHeigth,
+                fontSize: sizeTitle,
+                textAlign: titleFlow,
+              }}
+            >
               {children}
             </h1>
           )}
@@ -146,6 +170,32 @@ MainEmail.schema = {
             min: 10,
             max: 40,
             step: 1,
+          },
+        },
+        {
+          name: "textFlow",
+          label: "text flow",
+          type: types.SideEditPropType.Select,
+          selectOptions: {
+            display: types.OptionsDisplay.Select,
+            options: [
+              { value: "right", label: "rigth" },
+              { value: "left", label: "left" },
+              { value: "center", label: "center" },
+            ],
+          },
+        },
+        {
+          name: "titleFlow",
+          label: "title flow",
+          type: types.SideEditPropType.Select,
+          selectOptions: {
+            display: types.OptionsDisplay.Select,
+            options: [
+              { value: "right", label: "rigth" },
+              { value: "left", label: "left" },
+              { value: "center", label: "center" },
+            ],
           },
         },
       ],

@@ -8,20 +8,24 @@ import { Hr } from "./utilities/hr";
 //=============================
 
 interface HeaderEmailProps {
-  color: { color: string; value: { color: string; className: string } };
+  lineColor: types.IColor;
 }
 
 //=============================
 // Component to be rendered
 //=============================
 
-const HrEmail: types.Brick<HeaderEmailProps> = ({
-  color = { label: "black", value: { color: "black", className: "red" } },
-}) => {
+const HrEmail: types.Brick<HeaderEmailProps> = ({ lineColor }) => {
   return (
     <Container>
       <Section>
-        <Hr style={{ borderColor: color.value.className }}></Hr>
+        <Hr
+          style={
+            {
+              /*</Section>borderColor: lineColor.color */
+            }
+          }
+        ></Hr>
       </Section>
     </Container>
   );
@@ -32,14 +36,14 @@ const HrEmail: types.Brick<HeaderEmailProps> = ({
 //=============================
 
 HrEmail.schema = {
-  name: "HT-email",
+  name: "Hr-email",
   label: "hr email",
   getDefaultProps: () => ({
-    color: { label: "black", value: { color: "black", className: "black" } },
+    lineColor: { color: "black" },
   }),
   sideEditProps: [
     {
-      name: "line_color",
+      name: "lineColor",
       label: "Line color",
       type: types.SideEditPropType.Select,
       selectOptions: {
@@ -47,15 +51,15 @@ HrEmail.schema = {
         options: [
           {
             label: "White",
-            value: { color: "white", className: "green" },
+            value: { color: "	#ffffff" },
           },
           {
             label: "Black",
-            value: { color: "black", className: " black" },
+            value: { color: "#000000" },
           },
           {
             label: "red",
-            value: { color: "red", className: " yellow" },
+            value: { color: "	#ff0000" },
           },
         ],
       },

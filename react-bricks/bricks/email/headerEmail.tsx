@@ -6,15 +6,28 @@ import { Hr } from "./utilities/hr";
 //=============================
 // Local Types
 //=============================
+type gridFlow = ["row" | "column"] | "dense";
+type alignText =
+  | "start"
+  | "end"
+  | "left"
+  | "right"
+  | "center"
+  | "justify"
+  | "match-parent";
 
 interface HeaderEmailProps {
-  title_lineHeigth: number;
-  text_lineHeigth: number;
+  titleLineHeigth: number;
+  textLineHeigth: number;
   sizeTitle: string;
   sizeText: string;
-  text_size: number;
-  title_size: number;
-  text_color: { color: string; className: string };
+  textSize: number;
+  titleSize: number;
+  textColor: types.IColor;
+  textFlow: alignText;
+  titleFlow: alignText;
+  bgColor: { color: string };
+  gridDirection: gridFlow;
 }
 
 //=============================
@@ -22,20 +35,33 @@ interface HeaderEmailProps {
 //=============================
 
 const HeaderEmail: types.Brick<HeaderEmailProps> = ({
-  text_lineHeigth = 0,
-  title_lineHeigth = 1,
-  text_size = 10,
-  title_size = 20,
-  sizeTitle = `${title_size}px`,
-  sizeText = `${text_size}px`,
+  textLineHeigth,
+  titleLineHeigth,
+  textSize,
+  titleSize,
+  sizeTitle = `${titleSize}px`,
+  sizeText = `${textSize}px`,
+  textColor,
+  textFlow,
+  titleFlow,
+  bgColor,
+  gridDirection,
 }) => {
   return (
-    <Container>
+    <Container /*style={{ backgroundColor: bgColor.color }}*/>
       <Section>
         <Column>
           <RichText
             renderBlock={({ children }) => (
-              <p style={{ lineHeight: text_lineHeigth, fontSize: sizeText }}>
+              <p
+                style={{
+                  lineHeight: textLineHeigth,
+                  fontSize: sizeText,
+                  //color: textColor.color,
+                  textAlign: textFlow,
+                  gridAutoFlow: gridDirection,
+                }}
+              >
                 {children}
               </p>
             )}
@@ -55,11 +81,17 @@ const HeaderEmail: types.Brick<HeaderEmailProps> = ({
               types.RichTextFeatures.Heading3,
             ]}
             renderH1={({ children }) => (
-              <h1 style={{ lineHeight: title_lineHeigth, fontSize: sizeTitle }}>
+              <h1
+                style={{
+                  lineHeight: titleLineHeigth,
+                  fontSize: sizeTitle,
+                  // color: textColor.color,
+                  textAlign: titleFlow,
+                }}
+              >
                 {children}
               </h1>
             )}
-            // renderUL={({children}) => <ul>{children}</ul>}
           />
         </Column>
         <Column>
@@ -80,43 +112,48 @@ HeaderEmail.schema = {
   getDefaultProps: () => ({
     title: "Email title",
     text: "Lorem ipsum dolor sit amet.",
-    text_lineHeigth: 0,
-    title_lineHeigth: 1,
-    title_size: 20,
-    text_size: 20,
-
-    title_color: { color: "black", className: "black-f" },
+    textLineHeigth: 0,
+    titleLineHeigth: 1,
+    titleSize: 20,
+    textSize: 20,
+    textColor: { color: "black" },
+    textFlow: "left",
+    bgColor: "red",
   }),
   sideEditProps: [
     {
       groupName: "text",
       props: [
         {
-          name: "text_color",
+          name: "textColor",
           label: "text color",
           type: types.SideEditPropType.Select,
           selectOptions: {
             display: types.OptionsDisplay.Color,
             options: [
               {
+                label: "black",
+                value: {
+                  color: "black",
+                },
+              },
+              {
                 label: "red",
                 value: {
                   color: "red",
-                  className: "color : red",
                 },
               },
               {
                 label: "green",
                 value: {
                   color: "green",
-                  className: "color : green",
                 },
               },
             ],
           },
         },
         {
-          name: "text_lineHeigth",
+          name: "textLineHeigth",
           label: "text line heigth",
           type: types.SideEditPropType.Range,
           rangeOptions: {
@@ -126,7 +163,7 @@ HeaderEmail.schema = {
           },
         },
         {
-          name: "title_lineHeigth",
+          name: "titleLineHeigth",
           label: "title line heigth",
           type: types.SideEditPropType.Range,
           rangeOptions: {
@@ -136,7 +173,7 @@ HeaderEmail.schema = {
           },
         },
         {
-          name: "title_size",
+          name: "titleSize",
           label: "title size",
           type: types.SideEditPropType.Range,
           rangeOptions: {
@@ -146,13 +183,67 @@ HeaderEmail.schema = {
           },
         },
         {
-          name: "text_size",
+          name: "textSize",
           label: "text size",
           type: types.SideEditPropType.Range,
           rangeOptions: {
             min: 10,
             max: 40,
             step: 1,
+          },
+        },
+        {
+          name: "textFlow",
+          label: "text flow",
+          type: types.SideEditPropType.Select,
+          selectOptions: {
+            display: types.OptionsDisplay.Select,
+            options: [
+              { value: "right", label: "rigth" },
+              { value: "left", label: "left" },
+              { value: "center", label: "center" },
+            ],
+          },
+        },
+        {
+          name: "titleFlow",
+          label: "title flow",
+          type: types.SideEditPropType.Select,
+          selectOptions: {
+            display: types.OptionsDisplay.Select,
+            options: [
+              { value: "right", label: "rigth" },
+              { value: "left", label: "left" },
+              { value: "center", label: "center" },
+            ],
+          },
+        },
+        {
+          name: "bgColor",
+          label: "background color",
+          type: types.SideEditPropType.Select,
+          selectOptions: {
+            display: types.OptionsDisplay.Color,
+            options: [
+              {
+                label: "black",
+                value: {
+                  color: "black",
+                },
+              },
+              {
+                label: "red",
+                value: {
+                  color: "red",
+                },
+              },
+              {
+                label: "green",
+                value: {
+                  color: "green",
+                },
+              },
+            ],
           },
         },
       ],
